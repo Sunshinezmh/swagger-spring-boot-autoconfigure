@@ -1,4 +1,4 @@
-package com.dmsdbj.team3.swaggerspringbootautoconfigure;
+package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

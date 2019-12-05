@@ -1,4 +1,4 @@
-package com.dmsdbj.team3.swaggerspringbootautoconfigure;
+package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

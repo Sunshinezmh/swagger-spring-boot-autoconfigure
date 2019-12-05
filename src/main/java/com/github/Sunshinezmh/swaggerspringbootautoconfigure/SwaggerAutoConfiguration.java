@@ -1,4 +1,4 @@
-package com.dmsdbj.team3.swaggerspringbootautoconfigure;
+package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,7 +25,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 @ConditionalOnClass(name = {"javax.servlet.ServletRegistration", "springfox.documentation.spring.web.plugins.Docket"})
 @EnableConfigurationProperties(SwaggerProperties.class)
-public class SwaggerAutoConfiguration {
+public class SwaggerAutoConfiguration{
 
 	private SwaggerProperties swaggerProperties;
 
