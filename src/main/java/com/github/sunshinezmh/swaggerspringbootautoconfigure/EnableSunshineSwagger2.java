@@ -5,7 +5,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited

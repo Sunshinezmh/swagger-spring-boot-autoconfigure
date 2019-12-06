@@ -1,5 +1,6 @@
 package com.github.sunshinezmh.swaggerspringbootautoconfigure;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,23 +29,26 @@ import springfox.documentation.spring.web.plugins.Docket;
 @ConditionalOnProperty(prefix = "swagger", value = "true", matchIfMissing = true)
 public class SwaggerAutoConfiguration extends WebMvcConfigurationSupport {
 
+	@Autowired
 	private SwaggerProperties swaggerProperties;
 
-
-	@ConditionalOnMissingBean(Docket.class)
 	@Bean
-	public Docket createRestApi(){
+	public Docket createRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage(this.swaggerProperties.getBasePackage()))
+				//为当前包路径
+				.apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
 				.paths(PathSelectors.any())
 				.build();
 	}
 
-	private ApiInfo apiInfo(){
+	//构建 api文档的详细信息函数,注意这里的注解引用的是哪个
+	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title(this.swaggerProperties.getTitle())
+				//页面标题
+				.title(swaggerProperties.getTitle())
+				//创建人
 				.contact(new Contact(swaggerProperties.getContact().getName(), swaggerProperties.getContact().getUrl(), swaggerProperties.getContact().getEmail()))
 				//版本号
 				.version(swaggerProperties.getVersion())
@@ -52,7 +56,6 @@ public class SwaggerAutoConfiguration extends WebMvcConfigurationSupport {
 				.description(swaggerProperties.getDescription())
 				.build();
 	}
-
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
