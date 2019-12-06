@@ -1,15 +1,10 @@
-package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
+package com.github.sunshinezmh.swaggerspringbootautoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * Swagger属性定义
- * @Classname SwaggerProperties
- * @Auther sunshinezhang
- * @Date 2019/12/4 20:48
- */
+
 @EnableSwagger2
 @ConfigurationProperties(prefix = "swagger")
 @Data

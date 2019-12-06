@@ -1,4 +1,4 @@
-package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
+package com.github.sunshinezmh.swaggerspringbootautoconfigure;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -13,13 +13,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-/**
- * Swagger主动注入类
- *
- * @Classname SwaggerAutoConfiguration
- * @Auther sunshinezhang
- * @Date 2019/12/4 20:48
- */
+
 @Configuration
 @SwaggerCondition
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)

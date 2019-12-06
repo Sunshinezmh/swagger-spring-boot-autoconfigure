@@ -1,4 +1,4 @@
-package com.github.Sunshinezmh.swaggerspringbootautoconfigure;
+package com.github.sunshinezmh.swaggerspringbootautoconfigure;
 
 
 import org.springframework.context.annotation.Condition;
@@ -7,13 +7,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import java.util.Objects;
 
-/**
- * Swagger属性条件类
- *
- * @Classname OnSwaggerCondition
- * @Auther sunshinezhang
- * @Date 2019/12/4 20:47
- */
+
 public class OnSwaggerCondition implements Condition {
 
 	@Override
