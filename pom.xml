@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.github.sunshinezmh</groupId>
 	<artifactId>swagger-spring-boot-autoconfigure</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.5.RELEASE</version>
 	<name>swagger-spring-boot-autoconfigure</name>
 	<description>Demo project for Spring Boot</description>
 
