@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.sunshinezmh</groupId>
     <artifactId>swagger-spring-boot-autoconfigure</artifactId>
-    <version>0.0.7.RELEASE</version>
+    <version>0.0.8.RELEASE</version>
     <name>swagger-spring-boot-autoconfigure</name>
     <description>Demo project for Spring Boot</description>
 
@@ -136,7 +136,7 @@
         <repository>
             <!--此名称要和.m2/settings.xml中设置的ID一致 -->
             <id>sunshineNexus</id>
-            <url>http://192.168.3.18:8081/repository/best-practices-release/</url>
+            <url>http://192.168.191.131:8081/repository/sunshine-release/</url>
         </repository>
     </distributionManagement>
 
