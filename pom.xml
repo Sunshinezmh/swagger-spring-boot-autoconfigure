@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.sunshinezmh</groupId>
     <artifactId>swagger-spring-boot-autoconfigure</artifactId>
-    <version>0.0.8.RELEASE</version>
+    <version>0.0.9.RELEASE</version>
     <name>swagger-spring-boot-autoconfigure</name>
     <description>Demo project for Spring Boot</description>
 
@@ -79,35 +79,9 @@
 
     <build>
 
-        <!--jar包发布到nexus上的配置 -->
-        <!--		<plugins>-->
-
-        <!--			<plugin>-->
-        <!--				<groupId>org.apache.maven.plugins</groupId>-->
-        <!--				<artifactId>maven-compiler-plugin</artifactId>-->
-        <!--				<configuration>-->
-        <!--					<source>1.8</source>-->
-        <!--					<target>1.8</target>-->
-        <!--				</configuration>-->
-        <!--			</plugin>-->
-
-        <!--			&lt;!&ndash; sonatype提供了自动release的插件，这意味着运行mvn clean deploy后不用手动去close-> release了，此插件会自动release我们的项目到Maven中央仓库。 &ndash;&gt;-->
-        <!--			<plugin>-->
-        <!--				<groupId>org.sonatype.plugins</groupId>-->
-        <!--				<artifactId>nexus-staging-maven-plugin</artifactId>-->
-        <!--				<version>1.6.7</version>-->
-        <!--				<extensions>true</extensions>-->
-        <!--				<configuration>-->
-        <!--					<serverId>oss</serverId>-->
-        <!--					<nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
-        <!--					<autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-        <!--				</configuration>-->
-        <!--			</plugin>-->
-        <!--		</plugins>-->
-
-        <!--jar包发布到自己搭建的私服上的配置 -->
+        <!--jar包发布到nexus上的配置start -->
         <plugins>
-            <!--发布代码Jar插件 -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -116,94 +90,121 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--发布源码插件 -->
+
+            <!-- sonatype提供了自动release的插件，这意味着运行mvn clean deploy后不用手动去close-> release了，此插件会自动release我们的项目到Maven中央仓库。 -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>oss</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <repository>
-            <!--此名称要和.m2/settings.xml中设置的ID一致 -->
-            <id>sunshineNexus</id>
-            <url>http://192.168.191.131:8081/repository/sunshine-release/</url>
-        </repository>
-    </distributionManagement>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
-    <!--jar包发布到nexus上的配置 -->
-    <!--	<profiles>-->
-    <!--		<profile>-->
-    <!--			<id>release</id>-->
-    <!--			<build>-->
-    <!--				<plugins>-->
-    <!--					&lt;!&ndash; Source &ndash;&gt;-->
-    <!--					<plugin>-->
-    <!--						<groupId>org.apache.maven.plugins</groupId>-->
-    <!--						<artifactId>maven-source-plugin</artifactId>-->
-    <!--						<version>2.2.1</version>-->
-    <!--						<executions>-->
-    <!--							<execution>-->
-    <!--								<phase>package</phase>-->
-    <!--								<goals>-->
-    <!--									<goal>jar-no-fork</goal>-->
-    <!--								</goals>-->
-    <!--							</execution>-->
-    <!--						</executions>-->
-    <!--					</plugin>-->
-    <!--					&lt;!&ndash; Javadoc &ndash;&gt;-->
-    <!--					<plugin>-->
-    <!--						<groupId>org.apache.maven.plugins</groupId>-->
-    <!--						<artifactId>maven-javadoc-plugin</artifactId>-->
-    <!--						<version>2.9.1</version>-->
-    <!--						<executions>-->
-    <!--							<execution>-->
-    <!--								<phase>package</phase>-->
-    <!--								<goals>-->
-    <!--									<goal>jar</goal>-->
-    <!--								</goals>-->
-    <!--							</execution>-->
-    <!--						</executions>-->
-    <!--					</plugin>-->
-    <!--					&lt;!&ndash; GPG &ndash;&gt;-->
-    <!--					<plugin>-->
-    <!--						<groupId>org.apache.maven.plugins</groupId>-->
-    <!--						<artifactId>maven-gpg-plugin</artifactId>-->
-    <!--						<version>1.6</version>-->
-    <!--						<executions>-->
-    <!--							<execution>-->
-    <!--								<phase>verify</phase>-->
-    <!--								<goals>-->
-    <!--									<goal>sign</goal>-->
-    <!--								</goals>-->
-    <!--							</execution>-->
-    <!--						</executions>-->
-    <!--					</plugin>-->
-    <!--				</plugins>-->
+    <!--jar包发布到nexus上的配置end -->
 
+    <!--jar包发布到自己搭建的私服上的配置start -->
+    <!--        <plugins>-->
+    <!--            &lt;!&ndash;发布代码Jar插件 &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <configuration>-->
+    <!--                    <source>1.8</source>-->
+    <!--                    <target>1.8</target>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash;发布源码插件 &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-source-plugin</artifactId>-->
+    <!--                <version>2.2.1</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <phase>package</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>jar</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+    <!--    <distributionManagement>-->
+    <!--        <repository>-->
+    <!--            &lt;!&ndash;此名称要和.m2/settings.xml中设置的ID一致 &ndash;&gt;-->
+    <!--            <id>sunshineNexus</id>-->
+    <!--            <url>http://192.168.191.131:8081/repository/sunshine-release/</url>-->
+    <!--        </repository>-->
+    <!--    </distributionManagement>-->
+    <!--jar包发布到自己搭建的私服上的配置end -->
 
-    <!--			</build>-->
-    <!--			<distributionManagement>-->
-    <!--				<snapshotRepository>-->
-    <!--					<id>oss</id>-->
-    <!--					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
-    <!--				</snapshotRepository>-->
-    <!--				<repository>-->
-    <!--					<id>oss</id>-->
-    <!--					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-    <!--				</repository>-->
-    <!--			</distributionManagement>-->
-    <!--		</profile>-->
-    <!--	</profiles>-->
 
 </project>
